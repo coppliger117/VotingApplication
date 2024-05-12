@@ -4,6 +4,11 @@ import csv
 
 class Logic(QMainWindow, Ui_Dialog):
     def __init__(self):
+        '''
+        Tells the window what to do on startup and gives color to submission notices
+        
+        If a csv file does not exist, a new one is created with field names.
+        '''
         super().__init__()
         self.setupUi(self)
         self.hideoutput()
@@ -27,12 +32,20 @@ class Logic(QMainWindow, Ui_Dialog):
                 writer.writeheader()
     
     def hideoutput(self):
+        '''
+        Submission notices are hidden.
+        '''
         self.SuccessfullyVoted.hide()
         self.AlreadyVoted.hide()
         self.MustChooseCandidate.hide()
         self.InvalidID.hide()
         
     def submit(self):
+        '''
+        VoterID is taken in. If it is not a 6 digit number, a notice is given.
+        
+        If it's the voter's first time and the vote is successfully cast, it is sent to the csv.
+        '''
         VoterID = self.IDInput.text()
         if self.JaneVote.isChecked() or self.JohnVote.isChecked():
             with open(self.votes, 'r', newline='') as csvfile:
